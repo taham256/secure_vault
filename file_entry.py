@@ -6,6 +6,9 @@ class FileEntry:
         self.encrypted_data = encrypted_data
 
     def save(self, vault_dir):
-        path = os.path.join(vault_dir,self.filename + "enc")
+        if not os.path.exists(vault_dir):
+            os.makedirs(vault_dir)
+        
+        path = os.path.join(vault_dir,self.filename + ".enc")
         with open(path,"wb") as f:
             f.write((self.encrypted_data))

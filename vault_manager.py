@@ -1,10 +1,11 @@
 import os
 import base64
 import hashlib
-from cryptography.fernet import fernet, Fernet
+import json
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
+from cryptography.fernet import Fernet
 
 class VaultManager:
     def __init__(self,vault_path):
@@ -41,8 +42,8 @@ class VaultManager:
     def load_vault(self):
         if os.path.exists(self.vault_path):
             with open(self.vault_path, "r") as f:
-                self.vault_data = json.load(f)
+                self.vault_path = json.load(f)
 
     def save_vault(self):
-        with open(self.vault_data, "w") as f:
-            json.dump(self.vault_data, f, indent = 2)
+        with open(self.vault_path, "w") as f:
+            json.dump(self.vault_path, f, indent = 2)
